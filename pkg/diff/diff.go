@@ -8,10 +8,11 @@ package diff
 import (
 	"errors"
 	"fmt"
-	cmpdiff "github.com/kylelemons/godebug/diff"
 	"io"
 	"math"
 	"strings"
+
+	cmpdiff "github.com/kylelemons/godebug/diff"
 
 	"github.com/cloudevents/conformance/pkg/event"
 	"github.com/google/go-cmp/cmp"
@@ -108,6 +109,10 @@ func (i *Diff) Do() error {
 		return err
 	}
 
+	return i.Compare(eventsA, eventsB)
+}
+
+func (i *Diff) Compare(eventsA, eventsB []event.Event) error {
 	var diffs []string
 
 	// Tracker helps manage selecting events based on findBy and the current event to compare.
